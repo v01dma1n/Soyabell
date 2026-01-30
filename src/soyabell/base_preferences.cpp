@@ -9,28 +9,26 @@
 BasePreferences::BasePreferences(BaseConfig& config) : _config(config) {}
 
 void BasePreferences::setup() {
-  prefs.begin(PREF_NAMESPACE);
+  _prefs.begin(PREF_NAMESPACE);
   getPreferences();
 }
 
 void BasePreferences::getPreferences() {
-  prefs.begin(PREF_NAMESPACE, true); // true = read-only
-  prefs.getString(APP_PREF_WIFI_SSID, _config.ssid, MAX_PREF_STRING_LEN);
-  prefs.getString(APP_PREF_PASSWORD, _config.password, MAX_PREF_STRING_LEN);
-  prefs.getString(APP_PREF_TIME_ZONE, _config.time_zone, MAX_PREF_STRING_LEN);
-
-  int32_t savedLogLevel = prefs.getInt(APP_PREF_LOG_LEVEL, APP_LOG_INFO);
-  _config.logLevel = static_cast<AppLogLevel>(savedLogLevel);
-  prefs.end();
+  _prefs.begin(PREF_NAMESPACE, true);
+  _prefs.getString(APP_PREF_WIFI_SSID, _config.ssid, MAX_PREF_STRING_LEN);
+  _prefs.getString(APP_PREF_PASSWORD, _config.password, MAX_PREF_STRING_LEN);
+  _prefs.getString(APP_PREF_TIME_ZONE, _config.time_zone, MAX_PREF_STRING_LEN);
+  _config.logLevel = static_cast<AppLogLevel>(_prefs.getInt(APP_PREF_LOG_LEVEL, APP_LOG_INFO));
+  _prefs.end();
 }
 
 void BasePreferences::putPreferences() {
-  prefs.begin(PREF_NAMESPACE, false); // false = read-write
-  prefs.putString(APP_PREF_WIFI_SSID, _config.ssid);
-  prefs.putString(APP_PREF_PASSWORD, _config.password);
-  prefs.putString(APP_PREF_TIME_ZONE, _config.time_zone);
-  prefs.putInt(APP_PREF_LOG_LEVEL, _config.logLevel);
-  prefs.end(); // close the connection to the storage namespace 
+  _prefs.begin(PREF_NAMESPACE, false);
+  _prefs.putString(APP_PREF_WIFI_SSID, _config.ssid);
+  _prefs.putString(APP_PREF_PASSWORD, _config.password);
+  _prefs.putString(APP_PREF_TIME_ZONE, _config.time_zone);
+  _prefs.putInt(APP_PREF_LOG_LEVEL, _config.logLevel);
+  _prefs.end();
 }
 
 void BasePreferences::dumpPreferences() {

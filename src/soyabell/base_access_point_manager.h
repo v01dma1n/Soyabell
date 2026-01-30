@@ -2,16 +2,12 @@
 #define BASE_ACCESS_POINT_MANAGER_H
 
 #include "enc_types.h"
-
 #include <ESPAsyncWebServer.h>
 #include <WiFi.h>
 #include <DNSServer.h> 
 #include <vector>
+#include <functional>
 
-
-#define PASSWORD_MASKED "********" 
-
-class DisplayManager;
 class BasePreferences;
 
 class BaseAccessPointManager {
@@ -22,11 +18,11 @@ public:
     virtual void setup(const char* hostName);
     void loop();
     bool isClientConnected() const { return _isClientConnected; } 
-    void runBlockingLoop(DisplayManager& display, const char* waitingMsg, const char* connectedMsg);
-
+    // Updated to match your lambda usage in main
+    void runBlocking(std::function<void(bool)> callback);
 
 protected:
-    friend void onWifiEvent(WiFiEvent_t event); // Allow callback to access private members
+    friend void onWifiEvent(WiFiEvent_t event); 
     void setClientConnected(bool connected) { _isClientConnected = connected; } 
 
     BasePreferences& _prefs;
@@ -44,5 +40,5 @@ private:
     String assembleHtml();
     void setupServer();
 };
-
 #endif // BASE_ACCESS_POINT_MANAGER_H
+
