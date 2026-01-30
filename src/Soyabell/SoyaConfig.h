@@ -1,6 +1,6 @@
 #ifndef SOYABELL_SOYACONFIG_H
 #define SOYABELL_SOYACONFIG_H
-#include "EncTypes.h" // Use the library types
+#include "ESP32WiFi.h" // Use the library types
 
 struct SoyaConfig : BaseConfig {
     char api_user[MAX_PREF_STRING_LEN];

@@ -1,7 +1,7 @@
 #ifndef SOYABELL_SOYAACCESSPOINTMANAGER_H
 #define SOYABELL_SOYAACCESSPOINTMANAGER_H
 
-#include "BaseAccessPointManager.h"
+#include <ESP32WiFi.h>
 #include "SoyaConfig.h"
 #include "SoyaPreferences.h"
 

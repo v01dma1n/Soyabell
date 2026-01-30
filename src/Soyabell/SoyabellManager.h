@@ -6,12 +6,11 @@
 #include <arduinoFFT.h>
 #include <WiFi.h>
 #include <HTTPClient.h>
+#include <ESP32WiFi.h>
 
 #include "SoyaConfig.h"
 #include "SoyaPreferences.h"
 #include "SoyaAccessPointManager.h"
-#include "WifiConnector.h"
-#include "TimeManager.h"
 
 // Hardware Constants
 #define I2S_SD  32

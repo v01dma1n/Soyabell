@@ -1,7 +1,7 @@
 #ifndef SOYABELL_SOYAPREFERENCES_H
 #define SOYABELL_SOYAPREFERENCES_H
 
-#include "BasePreferences.h"
+#include <ESP32WiFi.h>
 #include "SoyaConfig.h"
 
 class SoyaPreferences : public BasePreferences {
