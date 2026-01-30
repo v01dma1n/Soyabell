@@ -1,5 +1,5 @@
-#ifndef ENC_TYPES_H
-#define ENC_TYPES_H
+#ifndef ESP32WIFI_ENCTYPES_H
+#define ESP32WIFI_ENCTYPES_H
 
 #include <Arduino.h>
 

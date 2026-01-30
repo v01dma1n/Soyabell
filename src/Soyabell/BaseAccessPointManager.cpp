@@ -1,8 +1,8 @@
-#include "base_access_point_manager.h"
-#include "base_preferences.h"
-#include "enc_debug.h"
-#include "tz_data.h"
-#include "log_level_data.h"
+#include "BaseAccessPointManager.h"
+#include "BasePreferences.h"
+#include "EncDebug.h"
+#include "TzData.h"
+#include "LogLevelData.h"
 
 // Global pointer for WiFi event
 static BaseAccessPointManager* _baseApInstance = nullptr;

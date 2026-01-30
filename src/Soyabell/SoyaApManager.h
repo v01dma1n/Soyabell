@@ -1,9 +1,9 @@
-#ifndef SOYA_AP_MANAGER_H
-#define SOYA_AP_MANAGER_H
+#ifndef SOYABELL_SOYAAPMANAGER_H
+#define SOYABELL_SOYAAPMANAGER_H
 
-#include "base_access_point_manager.h"
-#include "soya_config.h"
-#include "soya_preferences.h"
+#include "BaseAccessPointManager.h"
+#include "SoyaConfig.h"
+#include "SoyaPreferences.h"
 
 class SoyaAccessPointManager : public BaseAccessPointManager {
 public:

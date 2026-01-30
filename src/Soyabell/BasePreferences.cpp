@@ -1,5 +1,5 @@
-#include "base_preferences.h"
-#include "enc_debug.h"
+#include "BasePreferences.h"
+#include "EncDebug.h"
 
 #define APP_PREF_WIFI_SSID "wifi_ssid"
 #define APP_PREF_PASSWORD "password"

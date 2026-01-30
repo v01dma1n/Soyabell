@@ -1,4 +1,4 @@
-#include "tz_data.h"
+#include "TzData.h"
 
 const PrefSelectOption timezones[] = {
   {"(GMT-12:00) International Date Line West", "Etc/GMT+12"},

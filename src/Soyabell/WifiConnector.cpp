@@ -1,4 +1,4 @@
-#include "wifi_connector.h"
+#include "WifiConnector.h"
 #include <Arduino.h>
 #include <WiFi.h>
 

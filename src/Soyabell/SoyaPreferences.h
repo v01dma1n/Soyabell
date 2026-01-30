@@ -1,8 +1,8 @@
-#ifndef SOYA_PREFERENCES_H
-#define SOYA_PREFERENCES_H
+#ifndef SOYABELL_SOYAPREFERENCES_H
+#define SOYABELL_SOYAPREFERENCES_H
 
-#include "base_preferences.h"
-#include "soya_config.h"
+#include "BasePreferences.h"
+#include "SoyaConfig.h"
 
 class SoyaPreferences : public BasePreferences {
 public:

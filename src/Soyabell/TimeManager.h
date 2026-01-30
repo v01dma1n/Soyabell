@@ -1,8 +1,8 @@
-#ifndef TIME_MANAGER_H
-#define TIME_MANAGER_H
+#ifndef ESP32WIFI_TIMEMANAGER_H
+#define ESP32WIFI_TIMEMANAGER_H
 
 #include <Arduino.h>
-#include "enc_types.h"
+#include "EncTypes.h"
 
 class TimeManager {
 public:

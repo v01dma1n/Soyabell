@@ -1,5 +1,5 @@
-#ifndef ENC_DEBUG_H
-#define ENC_DEBUG_H
+#ifndef ESP32WIFI_ENCDEBUG_H
+#define ESP32WIFI_ENCDEBUG_H
 
 #include "Arduino.h"
 
@@ -13,4 +13,4 @@
   #define ENC_LOG(format, ...)
 #endif
 
-#endif // ENC_DEBUG_H
+#endif // ESP32WIFI_ENCDEBUG_H

@@ -1,7 +1,7 @@
-#ifndef BASE_ACCESS_POINT_MANAGER_H
-#define BASE_ACCESS_POINT_MANAGER_H
+#ifndef ESP32WIFI_BASEACCESSPOINTMANAGER_H
+#define ESP32WIFI_BASEACCESSPOINTMANAGER_H
 
-#include "enc_types.h"
+#include "EncTypes.h"
 #include <ESPAsyncWebServer.h>
 #include <WiFi.h>
 #include <DNSServer.h> 
@@ -40,5 +40,5 @@ private:
     String assembleHtml();
     void setupServer();
 };
-#endif // BASE_ACCESS_POINT_MANAGER_H
+#endif // ESP32WIFI_BASEACCESSPOINTMANAGER_H
 

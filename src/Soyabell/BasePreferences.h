@@ -1,7 +1,7 @@
-#ifndef BASE_PREFERENCES_H
-#define BASE_PREFERENCES_H
+#ifndef ESP32WIFI_BASEPREFERENCES_H
+#define ESP32WIFI_BASEPREFERENCES_H
 
-#include "enc_types.h"
+#include "EncTypes.h"
 #include <Preferences.h>
 
 class BasePreferences {
