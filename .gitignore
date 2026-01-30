@@ -1,2 +1,8 @@
 sound/
 signal/
+soyabell.txt
+*.*~
+*.code-workspace
+*.sh
+*.py
+*.src
