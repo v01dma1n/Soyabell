@@ -18,6 +18,11 @@
 #define I2S_SCK 25
 #define LED_PIN 2 
 
+// Touch Sensor Constants
+#define TOUCH_PIN       T0      // GPIO4 - change to your touch pin
+#define TOUCH_THRESHOLD 40      // Below this value = touched (adjust for your hardware)
+#define AP_HOLD_TIME_MS 5000    // 5 second long press to activate AP
+
 // Audio Constants
 #define SAMPLES 512
 #define SAMPLE_RATE 16000
@@ -43,6 +48,10 @@ private:
     int _beep_hits;
     unsigned long _last_hit_time;
 
+    // Touch Sensor State
+    unsigned long _touchStartTime;
+    bool _touchActive;
+
     // Detection Constants
     const double TARGET_FREQ = 2360.0;
     const double TOLERANCE = 100.0;
@@ -54,6 +63,8 @@ private:
     void setupI2S();
     void sendSms();
     void blinkLed();
+    void checkTouchForAP();
+    void startAccessPoint();
 };
 
 #endif

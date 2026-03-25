@@ -5,7 +5,9 @@ SoyabellManager::SoyabellManager()
       _apManager(_prefs, _config),
       _FFT(_vReal, _vImag, SAMPLES, SAMPLE_RATE),
       _beep_hits(0),
-      _last_hit_time(0) 
+      _last_hit_time(0),
+      _touchStartTime(0),
+      _touchActive(false)
 {
 }
 
@@ -19,16 +21,7 @@ void SoyabellManager::begin() {
     // WiFi Connection Strategy
     if (!WiFiConnect(_config.hostname, _config.ssid, _config.password, 20)) {
         Serial.println("\nConnection Failed. Starting AP.");
-        _apManager.setup("Soyabell-Setup");
-        
-        // AP Mode Blocking Loop
-        _apManager.runBlocking([](bool clientConnected) {
-            static unsigned long last = 0;
-            if (millis() - last > (clientConnected ? 200 : 1000)) {
-                digitalWrite(LED_PIN, !digitalRead(LED_PIN));
-                last = millis();
-            }
-        });
+        startAccessPoint();
     }
 
     Serial.println("\nWiFi Connected.");
@@ -38,6 +31,69 @@ void SoyabellManager::begin() {
     
     Serial.println("Starting Listener.");
     setupI2S();
+}
+
+void SoyabellManager::startAccessPoint() {
+    _apManager.setup("Soyabell-Setup");
+    
+    // AP Mode Blocking Loop
+    _apManager.runBlocking([](bool clientConnected) {
+        static unsigned long last = 0;
+        if (millis() - last > (clientConnected ? 200 : 1000)) {
+            digitalWrite(LED_PIN, !digitalRead(LED_PIN));
+            last = millis();
+        }
+    });
+}
+
+void SoyabellManager::checkTouchForAP() {
+    int touchValue = touchRead(TOUCH_PIN);
+    bool isTouched = (touchValue < TOUCH_THRESHOLD);
+
+    if (isTouched && !_touchActive) {
+        // Touch just started
+        _touchActive = true;
+        _touchStartTime = millis();
+        Serial.println("Touch detected...");
+    } 
+    else if (isTouched && _touchActive) {
+        // Still holding — check duration
+        unsigned long holdTime = millis() - _touchStartTime;
+        
+        // Rapid LED blink as feedback while holding
+        if (holdTime > 1000) {
+            static unsigned long lastBlink = 0;
+            unsigned long blinkRate = map(holdTime, 1000, AP_HOLD_TIME_MS, 300, 50);
+            blinkRate = constrain(blinkRate, 50, 300);
+            if (millis() - lastBlink > blinkRate) {
+                digitalWrite(LED_PIN, !digitalRead(LED_PIN));
+                lastBlink = millis();
+            }
+        }
+
+        if (holdTime >= AP_HOLD_TIME_MS) {
+            Serial.println("Long press detected! Activating AP mode...");
+            
+            // Solid LED to confirm activation
+            digitalWrite(LED_PIN, HIGH);
+            delay(500);
+            digitalWrite(LED_PIN, LOW);
+
+            // Tear down current WiFi and I2S before switching to AP
+            i2s_driver_uninstall(I2S_NUM_0);
+            WiFi.disconnect(true);
+            delay(500);
+
+            startAccessPoint();
+            // startAccessPoint is blocking — execution won't return here
+        }
+    } 
+    else if (!isTouched && _touchActive) {
+        // Touch released before threshold
+        _touchActive = false;
+        _touchStartTime = 0;
+        digitalWrite(LED_PIN, LOW); // Ensure LED is off
+    }
 }
 
 void SoyabellManager::setupI2S() {
@@ -103,6 +159,9 @@ void SoyabellManager::blinkLed() {
 }
 
 void SoyabellManager::loop() {
+    // Check touch sensor for AP activation (non-blocking)
+    checkTouchForAP();
+
     size_t bytes_read;
     int32_t raw_samples[SAMPLES];
     
