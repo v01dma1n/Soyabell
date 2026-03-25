@@ -65,7 +65,7 @@ Soyabell is an ESP32-based IoT device that listens for the specific "beep" frequ
 ## 📚 Dependencies
 
 This project relies on the following libraries:
-* **ESP32WiFi** (Local framework for WiFi/Config)
+* **ESP32WiFi** (A framework for WiFi/Config [https://github.com/v01dma1n/ESP32WiFi])
 * **arduinoFFT** (for audio analysis)
 * **ESPAsyncWebServer** & **AsyncTCP**
 
