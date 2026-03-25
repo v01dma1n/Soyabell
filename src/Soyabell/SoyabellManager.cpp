@@ -125,6 +125,25 @@ void SoyabellManager::setupI2S() {
     i2s_set_pin(I2S_NUM_0, &pin_config);
 }
 
+static String urlEncode(const char* str) {
+    const char *hex = "0123456789ABCDEF";
+    String encoded = "";
+    while (*str != '\0') {
+        if (('a' <= *str && *str <= 'z') ||
+            ('A' <= *str && *str <= 'Z') ||
+            ('0' <= *str && *str <= '9') ||
+            *str == '-' || *str == '_' || *str == '.' || *str == '~') {
+            encoded += *str;
+        } else {
+            encoded += '%';
+            encoded += hex[*str >> 4];
+            encoded += hex[*str & 0x0F];
+        }
+        str++;
+    }
+    return encoded;
+}
+
 void SoyabellManager::sendSms() {
     if (WiFi.status() != WL_CONNECTED) return;
     
@@ -139,16 +158,21 @@ void SoyabellManager::sendSms() {
     HTTPClient http;
     http.setTimeout(5000); 
 
-    String url = "https://voip.ms/api/v1/rest.php?method=sendSMS&api_username=" + String(_config.api_user) + 
-                 "&api_password=" + String(_config.api_pass) + 
-                 "&did=" + String(_config.did) + 
-                 "&dst=" + String(_config.dst) + 
+    String url = "https://voip.ms/api/v1/rest.php?method=sendSMS&api_username=" + urlEncode(_config.api_user) + 
+                 "&api_password=" + urlEncode(_config.api_pass) + 
+                 "&did=" + urlEncode(_config.did) + 
+                 "&dst=" + urlEncode(_config.dst) + 
                  "&message=Soymilk+is+Ready";
-                 
+    
     http.begin(url);
     int code = http.GET();
-    if(code > 0) Serial.println("SMS Sent");
-    else Serial.printf("SMS Fail: %s\n", http.errorToString(code).c_str());
+    if(code > 0) {
+        String payload = http.getString();
+        Serial.printf("HTTP Code: %d\n", code);
+        Serial.printf("Response: %s\n", payload.c_str());    
+    } else {
+        Serial.printf("HTTP Request Fail: %s\n", http.errorToString(code).c_str());
+    }
     http.end();
 }
 

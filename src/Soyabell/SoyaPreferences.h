@@ -27,7 +27,14 @@ public:
         _prefs.putString("dst", _soyaConfig.dst);
         _prefs.end();
     }
-
+    
+    void dumpPreferences() override {
+        BasePreferences::dumpPreferences();
+        Serial.printf("Pref=api_user: %s\n", _soyaConfig.api_user);
+        Serial.printf("Pref=api_pass: ***\n");
+        Serial.printf("Pref=did: %s\n", _soyaConfig.did);
+        Serial.printf("Pref=dst: %s\n", _soyaConfig.dst);
+    }
 private:
     SoyaConfig& _soyaConfig;
 };
