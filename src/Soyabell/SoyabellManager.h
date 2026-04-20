@@ -56,7 +56,7 @@ private:
     const double TARGET_FREQ = 2360.0;
     const double TOLERANCE = 100.0;
     const double SNR_THRESHOLD = 30.0;
-    const double MIN_ABS_MAG = 500.0;
+    const double MIN_ABS_MAG = 3e8;  // the values of peak magnitude are typically more than 4e8
     const int TRIGGER_THRESHOLD = 5;
 
     // Private Helpers
