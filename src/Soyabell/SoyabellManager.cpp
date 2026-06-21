@@ -18,6 +18,10 @@ void SoyabellManager::begin() {
     // Load Configuration
     _prefs.getPreferences();
 
+    if (strlen(_config.hostname) == 0) {
+        strncpy(_config.hostname, DEVICE_HOSTNAME, sizeof(_config.hostname));
+    }
+
     // WiFi Connection Strategy
     if (!WiFiConnect(_config.hostname, _config.ssid, _config.password, 20)) {
         Serial.println("\nConnection Failed. Starting AP.");

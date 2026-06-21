@@ -12,6 +12,9 @@
 #include "SoyaPreferences.h"
 #include "SoyaAccessPointManager.h"
 
+// Device Identity
+#define DEVICE_HOSTNAME "Soyabell"
+
 // Hardware Constants
 #define I2S_SD  32
 #define I2S_WS  33
